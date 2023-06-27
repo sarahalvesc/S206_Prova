@@ -3,34 +3,48 @@ Feature: Testando API de Pokemon
 Background: Executa antes de cada teste
     * def url_base = 'https://pokeapi.co/api/v2/'
 
-Scenario: Testando retorno de pokemon/ditto
+Scenario: Consultar informações de um Pokémon existente
     Given url url_base
+    And path 'pokemon/25'
     When method get
     Then status 200
+    And match response.id == 25    
 
-Scenario: Testando retorno de pokemon/ditto com informações invalidas
+Scenario: Consultar informações de um Pokémon inexistente
     Given url url_base
-    And path 'pokemon/chocolate'
+    And path 'pokemon/10000'
     When method get
     Then status 404
 
-Scenario: Testando o retorno de pokemon/ditto e verificando o JSON
-    Given url url_base
-    And path 'pokemon/ditto'
-    When method get
-    Then status 200
-    And match response.name == 'ditto'
-    And match response.id == 132
 
-Scenario: Testando o retorno de pokemon Rede, entrando em um dos elementos do array de idiomas e testando o retorno do JSON
+Scenario: Listar todos os Pokémon
     Given url url_base
-    And path 'version/1/'
+    And path 'pokemon'
     When method get
     Then status 200
-    And def idioma = response.names[5].language.url
-    And print idioma
-    And url idioma
+    And match response.count == 1281
+    
+
+Scenario: Consultar informações de um tipo de Pokémon existente
+    Given url url_base
+    And path 'type/electric'
     When method get
     Then status 200
-    Then match response.name == "es"
-    And match response.id == 7
+    And match response.name == "electric"
+
+
+Scenario: Consultar informações de um tipo de Pokémon inexistente
+    Given url url_base
+    And path 'type/canetaazul'
+    When method get
+    Then status 404
+
+# O próximo teste não deve rodar, visto que a API não permite utilizar o método POST
+#Scenario: Inserindo novo Pokemon usando o método POST
+#   Given url url_base 
+#   And path 'pokemon/'
+#   And request {name:'ManoelGomes', url: 'canetaazul'} 
+#   When method POST
+#   Then status 201  
+#   And match response.name == 'ManoelGomes'
+#   And match response.url == 'canetaazul'
