@@ -39,8 +39,8 @@ Scenario: Consultar informações de um tipo de Pokémon inexistente
     When method get
     Then status 404
 
-# O próximo teste não deve rodar, visto que a API não permite utilizar o método POST
-#Scenario: Inserindo novo Pokemon usando o método POST
+
+#Scenario: Simulando como seria Inserir novo Pokemon usando o método POST
 #   Given url url_base 
 #   And path 'pokemon/'
 #   And request {name:'ManoelGomes', url: 'canetaazul'} 
