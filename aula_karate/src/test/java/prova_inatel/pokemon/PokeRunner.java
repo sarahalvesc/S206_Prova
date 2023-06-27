@@ -2,7 +2,7 @@ package prova_inatel.pokemon;
 
 import com.intuit.karate.junit5.Karate;
 
-class UsersRunner {
+class PokeRunner {
     
     @Karate.Test
     Karate testPokemon() {
